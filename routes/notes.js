@@ -16,12 +16,6 @@ router.get("/fetchallnotes", fetchuser, async (req, res) => {
 router.post(
   "/addnote",
   fetchuser,
-  [
-    check("title", "Name is required").not().isEmpty().isLength({ min: 3 }),
-    check("description", "Description must be at least 5 characters").isLength({
-      min: 5,
-    }),
-  ],
   async (req, res) => {
     // Create a new note for the logged-in user
     const { title, description, tag } = req.body;

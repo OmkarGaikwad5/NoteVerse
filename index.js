@@ -4,9 +4,11 @@ const authRoutes = require("./routes/auth");
 const cors = require("cors"); 
  // Import the notes route 
 const app = express();
-app.use(cors()); 
-const PORT = 5000;
 
+
+const PORT = 8000;
+
+app.use(cors());
 app.use(express.json()); // Required to parse JSON body
 connectDB(); // Connect to MongoDB
 

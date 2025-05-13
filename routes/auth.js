@@ -6,8 +6,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 var fetchuser = require("./middleware/fetchuser");
 // Middleware to fetch user from JWT token
-
 const JWT_SECRET = "officialwebsiteofnoteverse";
+
+
+
 
 router.get("/register", (req, res) => {
   res.send("This is the register endpoint. Use POST to register a user.");
@@ -16,14 +18,8 @@ router.get("/register", (req, res) => {
 // Route 1 Create a new user using POST "/api/auth/createuser". No login required
 router.post(
   "/createuser",
-  [
-    check("name", "Name is required").not().isEmpty(),
-    check("email", "Enter a valid email").isEmail(),
-    check("password", "Password must be at least 5 characters").isLength({
-      min: 5,
-    }),
-  ],
   async (req, res) => {
+    console.log("Fired!")
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -67,6 +63,7 @@ router.post(
     check("password", "Password cannot be blank").exists(),
   ],
   async (req, res) => {
+    console.log(req.body)
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -94,7 +91,7 @@ router.post(
       const authtoken = jwt.sign(data, JWT_SECRET);
       
       
-      res.json({ authtoken }); // ✅ Only one response
+      res.json({ token: authtoken }); // ✅ Only one response
     } catch (err) {
       console.error(err.message);
       res.status(500).json({ error: "Server error", message: err.message });
